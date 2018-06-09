@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.app-nav.navbar {
+  padding-top: 0;
+  padding-bottom: 0;
+  /* background-color: #00CC00; */
+  cursor: default;
+}
+.app-nav.navbar .navbar-brand a {
+  color: #fff;
+  text-decoration: none;
+}
+.app-nav.navbar .nav-link,
+.app-nav.navbar .navbar-text {
+  color: #fff;
+}
+.app-nav.navbar .nav-link:focus,
+.app-nav.navbar .nav-link:hover,
+.app-nav.navbar .nav-link:visited {
+  color: #fff;
+}
+.app-nav.navbar .nav-item {
+  border-top: 5px solid transparent;
+}
+.app-nav.navbar .nav-item:hover {
+  background-color: rgba(255,255,255,0.5);
+  border-top: 5px solid #007C00;
+}
+.app-nav.navbar .nav-item.nav-usergreeting {
+  background-color: transparent;
+  border-top: 5px solid transparent;
+}
+.page-message {
+  color: #fff;
+}
+.error-message {
+  color: #ff0000;
+}
