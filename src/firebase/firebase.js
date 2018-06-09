@@ -14,10 +14,12 @@ const config = {
 if (!firebase.apps.length)
     firebase.initializeApp(config);
 
+const db = firebase.database();
 const auth = firebase.auth();
 const database = firebase.database();
 
 export {
+    db,
     auth,
     database
 };

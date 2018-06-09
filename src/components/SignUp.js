@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import * as routes from '../constants/routes';
 
 const SignUpPage = ({ history }) => (
@@ -13,7 +13,9 @@ const SignUpPage = ({ history }) => (
 );
 
 const INITIAL_STATE = {
+    fullname: '',
     email: '',
+    username: '',
     passwordOne: '',
     passwordTwo: '',
     error: null
@@ -25,13 +27,19 @@ class SignUpForm extends React.Component {
     state = { ...INITIAL_STATE };
 
     onSubmit = e => {
-        const { email, passwordOne } = this.state;
+        const { fullname, username, email, passwordOne } = this.state;
         const { history } = this.props;
 
         auth.CreateUser(email, passwordOne)
             .then(authUser => {
-                this.setState(() => ({ ...INITIAL_STATE }));
-                history.push(routes.DASHBOARD);
+                db.CreateUser(authUser.user.uid, fullname, username, email)
+                    .then(() => {
+                        this.setState(() => ({ ...INITIAL_STATE }));
+                        history.push(routes.DASHBOARD);
+                    })
+                    .catch(error => {
+                        this.setState(byPropKey('error', error));
+                    });                
             })
             .catch(error => {
                 this.setState(byPropKey('error', error));
@@ -47,6 +55,7 @@ class SignUpForm extends React.Component {
 
     render() {
         const {
+            fullname,
             username,
             email,
             passwordOne,
@@ -58,6 +67,7 @@ class SignUpForm extends React.Component {
             passwordOne !== passwordTwo || 
             passwordOne === '' ||
             email === '' ||
+            fullname === '' ||
             username === '';
         
         return (
@@ -65,8 +75,8 @@ class SignUpForm extends React.Component {
                 <div className='form-group'>
                     <label htmlFor='user-fullname'>Full Name</label>
                     <input 
-                        value={username}
-                        onChange={this.onChange.bind(null, 'username')}
+                        value={fullname}
+                        onChange={this.onChange.bind(null, 'fullname')}
                         type='text'
                         id='user-fullname'
                         placeholder='Full Name'
@@ -81,6 +91,17 @@ class SignUpForm extends React.Component {
                         type='email'
                         id='user-email'
                         placeholder='Email'
+                        className='form-control'
+                    />
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='user-username'>Username</label>
+                    <input 
+                        value={username}
+                        onChange={this.onChange.bind(null, 'username')}
+                        type='text'
+                        id='user-username'
+                        placeholder='Username'
                         className='form-control'
                     />
                 </div>
