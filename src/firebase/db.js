@@ -9,4 +9,6 @@ export const CreateUser = (id, fullname, username, email) =>
         email
     });
 
-export const GetUsers = () => db.ref('users').once('value');
+export const GetUserById = uid => db.ref(`users/${uid}`).once('value')
+
+export const GetAllUsers = () => db.ref('users').once('value');

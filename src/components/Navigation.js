@@ -12,8 +12,8 @@ const Navigation = () => (
         </button>
         <div className='navbar-collapse collapse' id='appnav'>
             <AuthUserContext.Consumer>
-                {authUser => authUser
-                    ? <NavigationAuth user={authUser} />
+                {userInfo => userInfo.authUser && userInfo.profile
+                    ? <NavigationAuth user={userInfo} />
                     : <NavigationNonAuth />
                 }
             </AuthUserContext.Consumer>
@@ -26,7 +26,7 @@ const NavigationAuth = props => (
         <li className='nav-item p-2'><Link to={routes.DASHBOARD} className='nav-link'>Dashboard</Link></li>
         <li className='nav-item p-2'><Link to={routes.ACCOUNT} className='nav-link'>Account</Link></li>
         <li className='nav-item p-2'><SignOutButton className='nav-link' /></li>
-        <li className='nav-item p-2 nav-usergreeting'><span className='navbar-text'>{`Hi, ${props.user.displayName || props.user.email}!`}</span></li>
+        <li className='nav-item p-2 nav-usergreeting'><span className='navbar-text'>{`Hi, ${props.user.profile.fullname.split(' ')[0]}!`}</span></li>
     </ul>
 );
 
