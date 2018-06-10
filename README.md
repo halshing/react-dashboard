@@ -2,4 +2,9 @@
 
 Install `npm install`
 
-Run `npm start`
+Run `npm start` 
+
+### Stack
+*  React
+*  Bootstrap
+*  Firebase
